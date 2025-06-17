@@ -3,6 +3,7 @@
   display: block;
   padding-top: 20px;
   padding-bottom: 40px;
+  border-bottom: 1px rgba(33, 33, 33, 0.4) solid;
 }
 
 .cards__list {
@@ -22,7 +23,10 @@
     list-style: none;
     display: grid;
     grid-template-columns: repeat(auto-fit, 288px);
-    gap: 20px 16px;
+    gap: 20px;
     justify-content: center;
+  }
+  .cards {
+    padding-bottom: 20px;
   }
 }

@@ -27,15 +27,22 @@
 }
 
 .card__like-btn {
-  background-image: url(../images/like_btn.svg);
+  background-image: url(../images/Union.svg);
   background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-color: transparent;
   width: 23px;
   height: 20px;
   border: 2px;
-  color: #212121;
-  opacity: 0.4;
   margin-top: 12px;
   padding: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.card__like-btn:hover {
+  opacity: 0.4;
+  cursor: url(../images/pointer.svg), pointer;
 }
 
 @media screen and (max-width: 675px) {
@@ -45,6 +52,7 @@
   }
   .card__title {
     font-size: 16px;
+    list-style: 1;
   }
 
   .card__like-btn {
