@@ -21,7 +21,6 @@
 
 .profile__description {
   margin: 0;
-  padding-bottom: 114px;
   font-family: Poppins, Arial, Helvetica, sans-serif;
   font-size: 16px;
   font-weight: 500;
@@ -41,7 +40,7 @@
   border-radius: 8px;
 }
 
-.profile_column {
+.profile__column {
   display: flex;
   flex-direction: column;
 }
@@ -57,13 +56,14 @@
   font-size: 16px;
   line-height: 1;
   letter-spacing: 0;
+  opacity: 0.7;
   transition: opacity 0.3s ease-in-out;
-  align-self: flex-end;
+  align-self: flex-start;
 }
 
 .profile__edit-btn:hover {
-  opacity: 0.7;
-  cursor: url(../images/pointer.svg), pointer;
+  opacity: 1;
+  cursor: pointer;
 }
 
 .profile__edit-btn__icon {
@@ -92,7 +92,7 @@
 
 .profile__add-btn:hover {
   opacity: 0.8;
-  cursor: url(../images/pointer.svg), pointer;
+  cursor: pointer;
 }
 
 .profile__add-btn__icon {
