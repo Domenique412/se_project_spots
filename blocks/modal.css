@@ -11,6 +11,10 @@
   align-items: center;
   padding: 10px;
 }
+
+.modal {
+visibility: hidden
+}
 .modal_is-opened {
   visibility: visible;
 }
