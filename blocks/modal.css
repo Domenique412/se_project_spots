@@ -12,7 +12,6 @@
   padding: 10px;
 }
 
-
 .modal_is-opened {
   visibility: visible;
 }
@@ -140,7 +139,6 @@
     line-height: 110.00000000000001%;
     color: #212121b2;
     margin: 0 0 24px;
-}
   }
 
   .modal__close-btn {
