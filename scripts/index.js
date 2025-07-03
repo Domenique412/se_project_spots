@@ -5,9 +5,10 @@ const editProfileForm = editProfileModal.querySelector(".modal__form")
 const editProfileNameInput = editProfileModal.querySelector("#profile-name-input")
 const editProfileDescriptionInput = editProfileModal.querySelector("#profile-description-input")
 
+
+const newPostModal = document.querySelector("#new-post-modal")
 const newPostForm = newPostModal.querySelector(".modal__form")
 const newPostBtn = document.querySelector(".profile__add-btn")
-const newPostModal = document.querySelector("#new-post-modal")
 const newPostCloseBtn = newPostModal.querySelector(".modal__close-btn")
 const newPostImageLinkInput = newPostModal.querySelector("#card-image-input")
 const newPostCaptionInput = newPostModal.querySelector("#card-caption-input")
@@ -15,25 +16,6 @@ const newPostCaptionInput = newPostModal.querySelector("#card-caption-input")
 const profileNameEl = document.querySelector(".profile__name")
 const profileDescriptionEl = document.querySelector(".profile__description")
 
-
-
-// Select the necessary form elements. You should select
-// these from inside the modal, not the document.
-// const addCardFormElement = // Use querySelector()
-// const nameInput = // Use querySelector()
-// const linkInput = // Use querySelector()
-
-// Create the form submission handler.
- //function handleAddCardSubmit(evt) {
-   //evt.preventDefault();
-//console.log(newPostImageLinkInput);
-//console.log(newPostCaptionInput);
-//newPostModal.classList.remove("modal_is-opened");
-//}
-
-
-// Create the submit listener.
-//addCardFormElement.addEventListener('submit', handleAddCardSubmit);
 
 
 
@@ -64,3 +46,17 @@ editProfileModal.classList.remove("modal_is-opened")
 }
 
 editProfileForm.addEventListener("submit", handleEditProfileSubmit);
+
+
+
+function handleNewPostSubmit(evt) {
+  evt.preventDefault();
+const imageLink = newPostImageLinkInput.value;
+  const caption = newPostCaptionInput.value;
+  console.log("Image Link:", imageLink);
+  console.log("Caption:", caption);
+   newPostImageLinkInput.value = "";
+  newPostCaptionInput.value = "";
+}
+
+newPostForm.addEventListener('submit', handleNewPostSubmit);
