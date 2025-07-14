@@ -4,36 +4,40 @@ const initialCards = [{
 },
 
 {
-name: "Restaurant terrace",
-link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/2-photo-by-ceiline-from-pexels.jpg"
+  name: "Restaurant terrace",
+  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/2-photo-by-ceiline-from-pexels.jpg"
 
 },
 
-{ name: "An outdoor cafe",
-link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/3-photo-by-tubanur-dogan-from-pexels.jpg"
+{
+  name: "An outdoor cafe",
+  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/3-photo-by-tubanur-dogan-from-pexels.jpg"
 },
 
-{name: "A very long bridge, over the forest and through the trees",
-link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/4-photo-by-maurice-laschet-from-pexels.jpg"
+{
+  name: "A very long bridge, over the forest and through the trees",
+  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/4-photo-by-maurice-laschet-from-pexels.jpg"
 },
 
-{ name: "Tunnel with morning light",
-link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/5-photo-by-van-anh-nguyen-from-pexels.jpg"
+{
+  name: "Tunnel with morning light",
+  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/5-photo-by-van-anh-nguyen-from-pexels.jpg"
 },
 
-{ name: "Mountain house",
-link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg"
+{
+  name: "Mountain house",
+  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg"
 }];
 
 const cardTemplate = document.querySelector("#card-template")
-.content.querySelector(".card");
+  .content.querySelector(".card");
 
-const cardsList = document .querySelector(".cards_list")
+const cardsList = document.querySelector(".cards_list")
 
-function getCardTemplate(data) {
-  cardElement = cardTemplate.cloneNode(true);
-  cardTitleElement = cardElement.querySelector(".card__title")
-  cardImageElement = cardElement.querySelector(".card__image");
+function getCardElement(data) {
+  const cardElement = cardTemplate.cloneNode(true);
+  const cardTitleElement = cardElement.querySelector(".card__title")
+  const cardImageElement = cardElement.querySelector(".card__image");
 
   cardImageElement.src = data.link;
   cardImageElement.alt = data.name;
@@ -79,7 +83,7 @@ function closeModal(modal) {
 editProfileBtn.addEventListener("click", function () {
   editProfileNameInput.value = profileNameEl.textContent;
   editProfileDescriptionInput.value = profileDescriptionEl.textContent;
- openModal(editProfileModal);
+  openModal(editProfileModal);
 });
 
 editProfileCloseBtn.addEventListener("click", function () {
@@ -97,9 +101,9 @@ newPostCloseBtn.addEventListener("click", function () {
 
 function handleEditProfileSubmit(evt) {
   evt.preventDefault();
-    profileNameEl.textContent = editProfileNameInput.value;
-    profileDescriptionEl.textContent = editProfileDescriptionInput.value;
-closeModal(editProfileModal)
+  profileNameEl.textContent = editProfileNameInput.value;
+  profileDescriptionEl.textContent = editProfileDescriptionInput.value;
+  closeModal(editProfileModal)
 }
 
 editProfileForm.addEventListener("submit", handleEditProfileSubmit);
@@ -108,7 +112,7 @@ editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
 function handleNewPostSubmit(evt) {
   evt.preventDefault();
-const imageLink = newPostImageLinkInput.value;
+  const imageLink = newPostImageLinkInput.value;
   const caption = newPostCaptionInput.value;
   console.log("Image Link:", imageLink);
   console.log("Caption:", caption);
@@ -119,6 +123,6 @@ const imageLink = newPostImageLinkInput.value;
 newPostForm.addEventListener('submit', handleNewPostSubmit);
 
 initialCards.forEach(function (item) {
-const cardElement = getCardElement(item);
-cardsList.prepend(cardElement)
+  const cardElement = getCardElement(item);
+  cardsList.prepend(cardElement)
 })
