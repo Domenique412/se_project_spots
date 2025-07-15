@@ -1,3 +1,7 @@
+.card {
+  position: relative;
+}
+
 .card__content {
   display: flex;
   justify-content: space-between;
@@ -44,6 +48,34 @@
 .card__like-btn:hover {
   opacity: 1;
   cursor: pointer;
+}
+
+.card__like-btn_active {
+  background-image: url(../images/redunion.svg);
+  opacity: 1;
+}
+
+.card__like-btn_active:hover {
+  opacity: 0.4;
+}
+
+.card__delete-btn {
+  background-image: url(../images/deletebtn.svg);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  transition: 0.3s ease-in-out;
+}
+
+.card__delete-btn:hover {
+  background-image: url(../images/deletehov.svg);
 }
 
 @media screen and (max-width: 675px) {

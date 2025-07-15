@@ -32,16 +32,29 @@ const initialCards = [{
 const cardTemplate = document.querySelector("#card-template")
   .content.querySelector(".card");
 
-const cardsList = document.querySelector(".cards_list")
+const cardsList = document.querySelector(".cards__list")
 
 function getCardElement(data) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitleElement = cardElement.querySelector(".card__title")
   const cardImageElement = cardElement.querySelector(".card__image");
 
+
   cardImageElement.src = data.link;
   cardImageElement.alt = data.name;
   cardTitleElement.textContent = data.name;
+
+
+  const cardLikeBtn = cardElement.querySelector(".card__like-btn");
+  cardLikeBtn.addEventListener("click", () => {
+    cardLikeBtn.classList.toggle("card__like-btn_active")
+  });
+
+  const cardDeleleteBtn = cardElement.querySelector(".card__delete-btn")
+  cardDeleleteBtn.addEventListener("click", () => {
+    cardElement.remove();
+    cardElement = null;
+  });
 
 
   return cardElement;
@@ -69,6 +82,8 @@ const newPostCaptionInput = newPostModal.querySelector("#card-caption-input")
 
 const profileNameEl = document.querySelector(".profile__name")
 const profileDescriptionEl = document.querySelector(".profile__description")
+
+
 
 
 function openModal(modal) {
@@ -112,11 +127,17 @@ editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
 function handleNewPostSubmit(evt) {
   evt.preventDefault();
-  const imageLink = newPostImageLinkInput.value;
-  const caption = newPostCaptionInput.value;
-  console.log("Image Link:", imageLink);
-  console.log("Caption:", caption);
+
+  const inputValues = {
+    link: newPostImageLinkInput.value,
+    name: newPostCaptionInput.value,
+  };
+
+  const cardElement = getCardElement(inputValues);
+  cardsList.prepend(cardElement);
+
   newPostForm.reset();
+
   closeModal(newPostModal)
 }
 
@@ -124,5 +145,6 @@ newPostForm.addEventListener('submit', handleNewPostSubmit);
 
 initialCards.forEach(function (item) {
   const cardElement = getCardElement(item);
-  cardsList.prepend(cardElement)
-})
+  cardsList.append(cardElement);
+});
+
