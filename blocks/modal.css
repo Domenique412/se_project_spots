@@ -157,7 +157,7 @@
   padding: 4px 8px;
 }
 
-.modal__close-preview_btn {
+.modal__close-preview-btn {
   top: 0;
   right: -52.5px;
   background-repeat: no-repeat;
@@ -173,7 +173,7 @@
   transition: opacity 0.3s ease-in-out;
 }
 
-.modal__close-preview_btn:hover {
+.modal__close-preview-btn:hover {
   opacity: 0.4;
   cursor: pointer;
 }
@@ -216,7 +216,7 @@
 }
 
 @media screen and (max-width: 516px) {
-  .modal__close-preview_btn {
+  .modal__close-preview-btn {
     top: -48px;
     right: 0;
   }
