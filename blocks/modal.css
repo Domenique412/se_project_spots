@@ -21,7 +21,6 @@
 .modal_is-opened {
   visibility: visible;
   opacity: 1;
-  transition: visibility 0s linear, opacity 0.5s linear;
 }
 
 .modal__container {
@@ -109,6 +108,7 @@
   opacity: 0.4;
   transition: opacity 0.3s ease-in-out;
   padding: 0;
+  cursor: pointer;
 }
 
 .modal__save-btn:hover {
@@ -147,8 +147,10 @@
   letter-spacing: 0;
   color: #fff;
   background-color: #212121;
-  width: 198px;
-  height: 24px;
+  margin: 0;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 10px);
   text-align: center;
   border-radius: 8px;
   margin: 8px 0 0;

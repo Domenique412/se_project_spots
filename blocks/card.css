@@ -53,10 +53,12 @@
 .card__like-btn_active {
   background-image: url(../images/redunion.svg);
   opacity: 1;
+  cursor: pointer;
 }
 
 .card__like-btn_active:hover {
   opacity: 0.4;
+  cursor: pointer;
 }
 
 .card__delete-btn {
@@ -72,10 +74,12 @@
   background-color: transparent;
   border: none;
   transition: 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .card__delete-btn:hover {
   background-image: url(../images/deletehov.svg);
+  cursor: pointer;
 }
 
 @media screen and (max-width: 675px) {
