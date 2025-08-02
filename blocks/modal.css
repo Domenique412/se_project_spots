@@ -76,6 +76,12 @@
   cursor: pointer;
 }
 
+.modal__error {
+  display: block;
+  color: red;
+  margin-top: 8px;
+}
+
 .modal__save-btn {
   cursor: pointer;
   max-width: 156px;
