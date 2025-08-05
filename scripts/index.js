@@ -76,8 +76,10 @@ function getCardElement(data) {
     closeModal(previewModal)
   });
 
+
   return cardElement;
-}
+};
+
 
 
 
