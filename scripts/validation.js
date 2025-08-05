@@ -5,7 +5,7 @@ const settings = {
   inactiveButtonClass: "modal__save-btn_disabled",
   inputErrorClass: "modal__input_type_error",
   errorClass: "modal__error_visible"
-}
+};
 
 
 
@@ -51,12 +51,13 @@ const toggleButtonState = (inputList, buttonEl, config) => {
 };
 
 const disabledButton = (buttonEl, config) => {
+  console.log(config.inactiveButtonClass);
   buttonEl.disabled = true;
   buttonEl.classList.add(config.inactiveButtonClass);
 };
 
 const resetValidation = (formEl, inputList) => {
-  inputList.forEach((input) => { hideInputError(formEl, input) })
+  inputList.forEach((input) => { hideInputError(formEl, input); })
 };
 
 const setEventListeners = (formEl, config) => {
