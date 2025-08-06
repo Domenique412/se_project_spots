@@ -74,13 +74,6 @@ function getCardElement(data) {
 
   });
 
-  previewModalCloseBtn.addEventListener("click", function () {
-    closeModal(previewModal)
-  });
-  // Whenever I move this event outside of the function all of my
-  // cards disappear and most of the functions on the entire
-  // page are disabled, How do I move this without throwing
-  // the entire page off balanced?
 
   return cardElement;
 };
@@ -147,6 +140,9 @@ function closeModal(modal) {
   modal.classList.remove("modal_is-opened");
 }
 
+previewModalCloseBtn.addEventListener("click", function () {
+  closeModal(previewModal)
+});
 
 
 
