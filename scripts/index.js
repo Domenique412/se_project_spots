@@ -42,6 +42,9 @@ const cardTemplate = document.querySelector("#card-template")
 
 const cardsList = document.querySelector(".cards__list")
 
+
+
+
 function getCardElement(data) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitleElement = cardElement.querySelector(".card__title")
@@ -71,15 +74,16 @@ function getCardElement(data) {
 
   });
 
-
   previewModalCloseBtn.addEventListener("click", function () {
     closeModal(previewModal)
   });
-
+  // Whenever I move this event outside of the function all of my
+  // cards disappear and most of the functions on the entire
+  // page are disabled, How do I move this without throwing
+  // the entire page off balanced?
 
   return cardElement;
 };
-
 
 
 
@@ -113,8 +117,30 @@ const previewCaptionEl = previewModal.querySelector(".modal__caption")
 
 
 
+
+
 function openModal(modal) {
   modal.classList.add("modal_is-opened");
+
+
+  const handleEscapeKey = (event) => {
+    if (event.key === "Escape") {
+      closeModal(modal);
+    }
+  };
+
+
+  const handleOverlayClick = (event) => {
+    if (event.target === modal) {
+      closeModal(modal);
+    }
+  };
+
+
+
+  document.addEventListener("keydown", handleEscapeKey);
+  modal.addEventListener("click", handleOverlayClick);
+
 }
 
 function closeModal(modal) {
@@ -122,14 +148,19 @@ function closeModal(modal) {
 }
 
 
+
+
+
+
+
 editProfileBtn.addEventListener("click", function () {
   editProfileNameInput.value = profileNameEl.textContent;
   editProfileDescriptionInput.value = profileDescriptionEl.textContent;
-  resetValidation(editProfileForm[editProfileNameInput, editProfileDescriptionInput]);
   openModal(editProfileModal);
 });
 
 editProfileCloseBtn.addEventListener("click", function () {
+
   closeModal(editProfileModal)
 });
 
