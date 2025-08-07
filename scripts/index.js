@@ -111,41 +111,44 @@ const previewCaptionEl = previewModal.querySelector(".modal__caption")
 
 
 
-
 function openModal(modal) {
   modal.classList.add("modal_is-opened");
-
-
-  const handleEscapeKey = (event) => {
-    if (event.key === "Escape") {
-      closeModal(modal);
-    }
-  };
-
-
-  const handleOverlayClick = (event) => {
-    if (event.target === modal) {
-      closeModal(modal);
-    }
-  };
-
-
-
-  document.addEventListener("keydown", handleEscapeKey);
-  modal.addEventListener("click", handleOverlayClick);
-
-}
+};
 
 function closeModal(modal) {
   modal.classList.remove("modal_is-opened");
-}
+};
 
-previewModalCloseBtn.addEventListener("click", function () {
-  closeModal(previewModal)
+const handleEscapeKey = (event) => {
+  if (event.key === "Escape") {
+    const openedModal = document.querySelector(".modal_is-opened");
+    if (openedModal) {
+      closeModal(openedModal);
+    }
+  }
+
+};
+
+
+//handleEscapeKey would not work unless I added this in
+document.addEventListener("keydown", handleEscapeKey);
+
+const handleOverlayClick = (event) => {
+  if (event.target.classList.contains("modal")) {
+    closeModal(event.target);
+  }
+};
+
+const allModals = document.querySelectorAll(".modal");
+allModals.forEach(modal => {
+  modal.addEventListener("click", handleOverlayClick);
 });
 
 
 
+previewModalCloseBtn.addEventListener("click", function () {
+  closeModal(previewModal)
+});
 
 
 
@@ -156,7 +159,6 @@ editProfileBtn.addEventListener("click", function () {
 });
 
 editProfileCloseBtn.addEventListener("click", function () {
-
   closeModal(editProfileModal)
 });
 
@@ -201,4 +203,9 @@ initialCards.forEach(function (item) {
   const cardElement = getCardElement(item);
   cardsList.append(cardElement);
 });
+
+
+
+
+
 
