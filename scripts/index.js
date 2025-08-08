@@ -113,9 +113,18 @@ const previewCaptionEl = previewModal.querySelector(".modal__caption")
 
 function openModal(modal) {
   modal.classList.add("modal_is-opened");
+
+  // added the event listener to the openModal function
+
+  document.addEventListener("keydown", handleEscapeKey);
 };
 
+
+
 function closeModal(modal) {
+
+  // do not see a listener in the closeModal function
+
   modal.classList.remove("modal_is-opened");
 };
 
@@ -130,8 +139,8 @@ const handleEscapeKey = (event) => {
 };
 
 
-//handleEscapeKey would not work unless I added this in
-document.addEventListener("keydown", handleEscapeKey);
+
+
 
 const handleOverlayClick = (event) => {
   if (event.target.classList.contains("modal")) {
