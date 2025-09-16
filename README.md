@@ -23,4 +23,4 @@ The purpose of this project was to create something that would adapt to differen
 
 -Video Review
 
-[Link to review of the project] (https://drive.google.com/file/d/1_lHDC9k7Y5iRByXoufUZ5xPPZOy6ysz8/view?usp=sharing)
+[Link to review of the project](https://drive.google.com/file/d/1_lHDC9k7Y5iRByXoufUZ5xPPZOy6ysz8/view?usp=sharing)
