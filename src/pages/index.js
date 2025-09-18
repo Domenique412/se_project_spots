@@ -1,5 +1,7 @@
+import "core-js";
 import { enableValidation, settings, disabledButton } from "../scripts/validation.js"
 import "./index.css";
+
 
 
 
