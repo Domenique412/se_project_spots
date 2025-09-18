@@ -1,4 +1,4 @@
-import { enableValidation, settings } from "../scripts/validation.js"
+import { enableValidation, settings, disabledButton } from "../scripts/validation.js"
 import "./index.css";
 
 
@@ -187,7 +187,6 @@ editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
 function handleNewPostSubmit(evt) {
   evt.preventDefault();
-
   const inputValues = {
     link: newPostImageLinkInput.value,
     name: newPostCaptionInput.value,
