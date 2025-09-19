@@ -56,14 +56,16 @@ const setEventListeners = (formEl, config) => {
   const inputList = Array.from(formEl.querySelectorAll(config.inputSelector));
   const buttonEl = formEl.querySelector(config.submitButtonSelector);
 
-  toggleButtonState(inputList, buttonEl, config);
+  if (buttonEl) {
+    toggleButtonState(inputList, buttonEl, config);
 
-  inputList.forEach((inputEl) => {
-    inputEl.addEventListener("input", function () {
-      checkInputValidity(formEl, inputEl, config);
-      toggleButtonState(inputList, buttonEl, config);
+    inputList.forEach((inputEl) => {
+      inputEl.addEventListener("input", function () {
+        checkInputValidity(formEl, inputEl, config);
+        toggleButtonState(inputList, buttonEl, config);
+      });
     });
-  });
+  }
 };
 
 const resetValidation = (formEl, inputList, config) => {

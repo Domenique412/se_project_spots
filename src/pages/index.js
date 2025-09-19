@@ -2,7 +2,7 @@ import "core-js";
 import { enableValidation, settings, disabledButton } from "../scripts/validation.js"
 import "./index.css";
 import Api from "../utils/Api.js";
-import { data } from "autoprefixer";
+
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1/",
@@ -14,14 +14,14 @@ const api = new Api({
 
 
 
+let selectedCard;
+let selectedCardId;
+
 api.getAppInfo()
   .then(([cards, info]) => {
-
-
     cards.forEach(function (item) {
       const cardElement = getCardElement(item);
       cardsList.append(cardElement);
-
     });
     profileNameEl.textContent = info.name;
     profileDescriptionEl.textContent = info.about;
@@ -39,21 +39,25 @@ const cardTemplate = document.querySelector("#card-template")
 const cardsList = document.querySelector(".cards__list")
 
 
-function handleDeleteCard(cardElement, cardId) {
-  selectedCard = cardElement;
-  selectedCardId = cardId;
-  closeModal(deleteModal)
-}
+
 
 function handleDeleteSubmit(evt) {
   evt.preventDefault();
   api.removeCard(selectedCardId)
     .then(() => {
-      remove(cardElement);
+      if (selectedCardId) {
+        selectedCard.remove();
+      }
+      closeModal(deleteModal);
     })
     .catch(console.error);
-  closeModal(deleteModal)
 }
+
+function handleDeleteCard(cardElement, cardId) {
+  console.log(cardId);
+  openModal(deleteModal);
+}
+
 
 
 function getCardElement(data) {
@@ -61,7 +65,7 @@ function getCardElement(data) {
   const cardTitleElement = cardElement.querySelector(".card__title")
   const cardImageElement = cardElement.querySelector(".card__image");
   const cardLikeBtn = cardElement.querySelector(".card__like-btn");
-  const cardDeleleteBtn = cardElement.querySelector(".card__delete-btn")
+  const cardDeleleteBtn = cardElement.querySelector(".card__delete-btn");
 
 
   cardImageElement.src = data.link;
@@ -74,9 +78,9 @@ function getCardElement(data) {
     cardLikeBtn.classList.toggle("card__like-btn_active")
   });
 
-  deleteCardBtn.addEventListener("click", (evt) =>
-    handleDeleteCard(cardElement, data)
-  );
+  deleteCardBtn.addEventListener("click", (evt) => {
+    handleDeleteCard(cardElement, data._id)
+  });
 
 
 
@@ -96,8 +100,7 @@ function getCardElement(data) {
   return cardElement;
 };
 
-let selectedCard;
-let selectedCardId;
+
 
 const profileAvatarEl = document.querySelector(".profile__avatar")
 const profileAvatarBtn = document.querySelector(".profile__avatar-btn")
@@ -115,9 +118,10 @@ const editProfileDescriptionInput = editProfileModal.querySelector("#profile-des
 
 
 const deleteModal = document.querySelector("#delete-modal")
-const deleteModalCloseBtn = document.querySelector(".modal__close-btn")
+const deleteModalCancelBtn = deleteModal.querySelector(".modal__cancel-btn")
 const deleteCardBtn = document.querySelector(".modal__delete-btn")
 const deleteForm = deleteModal.querySelector(".modal__form")
+const deleteModalCloseBtn = deleteModal.querySelector(".modal__close-btn")
 
 const newPostModal = document.querySelector("#new-post-modal")
 const newPostForm = newPostModal.querySelector(".modal__form")
@@ -184,6 +188,13 @@ profileAvatarCloseBtn.addEventListener("click", function () {
   closeModal(profileAvatarModal)
 });
 
+deleteModalCancelBtn.addEventListener("click", function () {
+  closeModal(deleteModal)
+});
+
+deleteModalCloseBtn.addEventListener("click", function () {
+  closeModal(deleteModal)
+});
 
 
 editProfileBtn.addEventListener("click", function () {
