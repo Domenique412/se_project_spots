@@ -26,7 +26,7 @@ class Api {
       });
 
   }
-  // create another method, getUserInfor
+
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
@@ -96,7 +96,7 @@ class Api {
 
 
   removeCard(id) {
-    return fetch(`${this._baseUrl}/cards/card${id}`, {
+    return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers
     })

@@ -5,9 +5,9 @@ import Api from "../utils/Api.js";
 
 
 const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1/",
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
-    authorization: "7ce2249a-46a0-4811-b8db-24481e41c52b",
+    authorization: "0cc6e233-7e47-4b6a-bd0f-16c6c5e3b7a1",
     "Content-Type": "application/json"
   }
 });
@@ -41,6 +41,8 @@ const cardsList = document.querySelector(".cards__list")
 
 
 
+
+
 function handleDeleteSubmit(evt) {
   evt.preventDefault();
   api.removeCard(selectedCardId)
@@ -53,8 +55,10 @@ function handleDeleteSubmit(evt) {
     .catch(console.error);
 }
 
-function handleDeleteCard(cardElement, cardId) {
-  console.log(cardId);
+
+function handleDeleteCard(cardElement, data) {
+  selectedCard = cardElement;
+  selectedCardId = data._id;
   openModal(deleteModal);
 }
 
@@ -65,7 +69,7 @@ function getCardElement(data) {
   const cardTitleElement = cardElement.querySelector(".card__title")
   const cardImageElement = cardElement.querySelector(".card__image");
   const cardLikeBtn = cardElement.querySelector(".card__like-btn");
-  const cardDeleleteBtn = cardElement.querySelector(".card__delete-btn");
+  const cardDeleteBtn = cardElement.querySelector(".card__delete-btn");
 
 
   cardImageElement.src = data.link;
@@ -79,12 +83,12 @@ function getCardElement(data) {
   });
 
   deleteCardBtn.addEventListener("click", (evt) => {
-    handleDeleteCard(cardElement, data._id)
+    handleDeleteCard(cardElement, data)
   });
 
 
 
-  cardDeleleteBtn.addEventListener("click", () => {
+  cardDeleteBtn.addEventListener("click", () => {
     openModal(deleteModal);
   });
 
