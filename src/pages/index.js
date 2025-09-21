@@ -46,11 +46,9 @@ const cardsList = document.querySelector(".cards__list")
 function handleDeleteSubmit(evt) {
   evt.preventDefault();
   api.removeCard(selectedCardId)
+
     .then(() => {
-      if (selectedCardId) {
-        selectedCard.remove();
-      }
-      closeModal(deleteModal);
+      closeModal(deleteModal)
     })
     .catch(console.error);
 }
@@ -59,8 +57,19 @@ function handleDeleteSubmit(evt) {
 function handleDeleteCard(cardElement, data) {
   selectedCard = cardElement;
   selectedCardId = data._id;
+  console.log(data)
   openModal(deleteModal);
 }
+
+function handleLike(evt, id) {
+  evt.target.classList.toggle("card__like-btn_active");
+  //check whether card is currently liked or not
+  // const isLiked ==????
+  // cal the changeLikeStatus method, passing the right arguments
+  // handle the response (.then .catch)
+  // in .then toggle active class
+}
+
 
 
 
@@ -71,6 +80,8 @@ function getCardElement(data) {
   const cardLikeBtn = cardElement.querySelector(".card__like-btn");
   const cardDeleteBtn = cardElement.querySelector(".card__delete-btn");
 
+  // if card is liked set active on the class
+
 
   cardImageElement.src = data.link;
   cardImageElement.alt = data.name;
@@ -78,19 +89,16 @@ function getCardElement(data) {
 
 
 
-  cardLikeBtn.addEventListener("click", () => {
-    cardLikeBtn.classList.toggle("card__like-btn_active")
+
+  cardLikeBtn.addEventListener("click", (evt) => {
+    handleLike(evt, data._id)
   });
 
-  deleteCardBtn.addEventListener("click", (evt) => {
+
+
+  cardDeleteBtn.addEventListener("click", (evt) =>
     handleDeleteCard(cardElement, data)
-  });
-
-
-
-  cardDeleteBtn.addEventListener("click", () => {
-    openModal(deleteModal);
-  });
+  );
 
   cardImageElement.addEventListener("click", () => {
     previewImageEl.src = data.link;
@@ -222,6 +230,10 @@ newPostCloseBtn.addEventListener("click", function () {
 
 function handleEditProfileSubmit(evt) {
   evt.preventDefault();
+  // change text content to saving
+  const submitBtn = evt.submitter;
+  submitBtn.textContent = "Saving...";
+
   api.editUserInfo({
     name: editProfileNameInput.value,
     about: editProfileDescriptionInput.value
@@ -233,12 +245,16 @@ function handleEditProfileSubmit(evt) {
     })
     .catch((err) => {
       console.error(err);
-    });
-
-
+    })
+    .finally(() => {
+      // call set button setButtonText instead
+      submitBtn.textContent = "Save";
+    })
 
   closeModal(editProfileModal)
 }
+// implement loading text for all other form submissions
+
 editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
 
