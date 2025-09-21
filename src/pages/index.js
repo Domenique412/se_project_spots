@@ -2,6 +2,7 @@ import "core-js";
 import { enableValidation, settings, disabledButton } from "../scripts/validation.js"
 import "./index.css";
 import Api from "../utils/Api.js";
+import { setButtonText } from "../utils/helpers.js";
 
 
 const api = new Api({
@@ -57,17 +58,18 @@ function handleDeleteSubmit(evt) {
 function handleDeleteCard(cardElement, data) {
   selectedCard = cardElement;
   selectedCardId = data._id;
-  console.log(data)
   openModal(deleteModal);
 }
 
 function handleLike(evt, id) {
-  evt.target.classList.toggle("card__like-btn_active");
-  //check whether card is currently liked or not
-  // const isLiked ==????
-  // cal the changeLikeStatus method, passing the right arguments
-  // handle the response (.then .catch)
-  // in .then toggle active class
+  const likeBtn = evt.target;
+  const isLiked = likeBtn.classList.contains("card__like-btn_active");
+  console.log(isLiked);
+  api.handleLike(id, isLiked)
+    .then(() => {
+      likeBtn.classList.toggle("card__like-btn_active");
+    })
+    .catch(console.error);
 }
 
 
@@ -75,26 +77,25 @@ function handleLike(evt, id) {
 
 function getCardElement(data) {
   const cardElement = cardTemplate.cloneNode(true);
-  const cardTitleElement = cardElement.querySelector(".card__title")
+  const cardTitleElement = cardElement.querySelector(".card__title");
   const cardImageElement = cardElement.querySelector(".card__image");
   const cardLikeBtn = cardElement.querySelector(".card__like-btn");
   const cardDeleteBtn = cardElement.querySelector(".card__delete-btn");
-
-  // if card is liked set active on the class
-
 
   cardImageElement.src = data.link;
   cardImageElement.alt = data.name;
   cardTitleElement.textContent = data.name;
 
 
-
+  if (Array.isArray(data.likes) && window.currentUserId) {
+    if (data.likes.some(user => user._id === window.currentUserId)) {
+      cardLikeBtn.classList.add("card__like-btn_active");
+    }
+  }
 
   cardLikeBtn.addEventListener("click", (evt) => {
-    handleLike(evt, data._id)
+    handleLike(evt, data._id);
   });
-
-
 
   cardDeleteBtn.addEventListener("click", (evt) =>
     handleDeleteCard(cardElement, data)
@@ -104,13 +105,11 @@ function getCardElement(data) {
     previewImageEl.src = data.link;
     previewImageEl.alt = data.name;
     previewCaptionEl.textContent = data.name;
-    openModal(previewModal)
-
+    openModal(previewModal);
   });
 
-
   return cardElement;
-};
+}
 
 
 
@@ -228,11 +227,12 @@ newPostCloseBtn.addEventListener("click", function () {
   closeModal(newPostModal)
 });
 
+
+
 function handleEditProfileSubmit(evt) {
   evt.preventDefault();
-  // change text content to saving
   const submitBtn = evt.submitter;
-  submitBtn.textContent = "Saving...";
+  setButtonText(submitBtn, true, "Saving...", "Save");
 
   api.editUserInfo({
     name: editProfileNameInput.value,
@@ -241,19 +241,16 @@ function handleEditProfileSubmit(evt) {
     .then((data) => {
       profileNameEl.textContent = data.name;
       profileDescriptionEl.textContent = data.about;
-
+      closeModal(editProfileModal);
     })
     .catch((err) => {
       console.error(err);
     })
     .finally(() => {
-      // call set button setButtonText instead
-      submitBtn.textContent = "Save";
-    })
-
-  closeModal(editProfileModal)
+      setButtonText(submitBtn, false, "Saving...", "Save");
+    });
 }
-// implement loading text for all other form submissions
+
 
 editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
@@ -283,12 +280,16 @@ function handleNewPostSubmit(evt) {
     name: newPostCaptionInput.value,
   };
 
-  const cardElement = getCardElement(inputValues);
-  cardsList.prepend(cardElement);
-  evt.target.reset();
-  disabledButton(newPostSaveBtn, settings);
-  closeModal(newPostModal);
-};
+  api.addNewCard(inputValues)
+    .then((cardData) => {
+      const cardElement = getCardElement(cardData);
+      cardsList.prepend(cardElement);
+      evt.target.reset();
+      disabledButton(newPostSaveBtn, settings);
+      closeModal(newPostModal);
+    })
+    .catch(console.error);
+}
 
 newPostForm.addEventListener("submit", handleNewPostSubmit);
 
