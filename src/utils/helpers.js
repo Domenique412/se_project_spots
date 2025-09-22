@@ -1,4 +1,4 @@
-function setButtonText(
+export function setButtonText(
   btn,
   isLoading,
   defaultText = "Save",
@@ -9,4 +9,5 @@ function setButtonText(
     btn.textContent = defaultText;
   }
 
-}
+};
+

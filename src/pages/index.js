@@ -26,6 +26,7 @@ api.getAppInfo()
     });
     profileNameEl.textContent = info.name;
     profileDescriptionEl.textContent = info.about;
+    profileAvatarEl.src = info.avatar;
 
   })
   .catch((err) => {
@@ -49,6 +50,9 @@ function handleDeleteSubmit(evt) {
   api.removeCard(selectedCardId)
 
     .then(() => {
+      if (selectedCard) {
+        selectedCard.remove();
+      }
       closeModal(deleteModal)
     })
     .catch(console.error);
