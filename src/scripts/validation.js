@@ -68,8 +68,14 @@ const setEventListeners = (formEl, config) => {
   }
 };
 
-const resetValidation = (formEl, inputList, config) => {
-  inputList.forEach((input) => { hideInputError(formEl, input); })
+
+export const resetValidation = (formEl, config) => {
+  const inputList = Array.from(formEl.querySelectorAll(config.inputSelector));
+  inputList.forEach((input) => { hideInputError(formEl, input, config); });
+  const buttonEl = formEl.querySelector(config.submitButtonSelector);
+  if (buttonEl) {
+    toggleButtonState(inputList, buttonEl, config);
+  }
 };
 
 

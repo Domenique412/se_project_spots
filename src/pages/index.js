@@ -1,5 +1,5 @@
 import "core-js";
-import { enableValidation, settings, disabledButton } from "../scripts/validation.js"
+import { enableValidation, settings, disabledButton, resetValidation } from "../scripts/validation.js"
 import "./index.css";
 import Api from "../utils/Api.js";
 import { setButtonText } from "../utils/helpers.js";
@@ -47,6 +47,8 @@ const cardsList = document.querySelector(".cards__list")
 
 function handleDeleteSubmit(evt) {
   evt.preventDefault();
+  const submitBtn = evt.submitter;
+  setButtonText(submitBtn, true, "Deleting...", "Delete")
   api.removeCard(selectedCardId)
 
     .then(() => {
@@ -55,7 +57,11 @@ function handleDeleteSubmit(evt) {
       }
       closeModal(deleteModal)
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(submitBtn, false, "Deleting...", "Delete")
+    });
+
 }
 
 
@@ -68,7 +74,6 @@ function handleDeleteCard(cardElement, data) {
 function handleLike(evt, id) {
   const likeBtn = evt.target;
   const isLiked = likeBtn.classList.contains("card__like-btn_active");
-  console.log(isLiked);
   api.handleLike(id, isLiked)
     .then(() => {
       likeBtn.classList.toggle("card__like-btn_active");
@@ -91,12 +96,11 @@ function getCardElement(data) {
   cardTitleElement.textContent = data.name;
 
 
-  if (Array.isArray(data.likes) && window.currentUserId) {
-    if (data.likes.some(user => user._id === window.currentUserId)) {
-      cardLikeBtn.classList.add("card__like-btn_active");
-    }
+  if (data.isLiked) {
+    cardLikeBtn.classList.add('card__like-btn_active');
+  } else {
+    cardLikeBtn.classList.remove('card__like-btn_active');
   }
-
   cardLikeBtn.addEventListener("click", (evt) => {
     handleLike(evt, data._id);
   });
@@ -213,6 +217,7 @@ deleteModalCloseBtn.addEventListener("click", function () {
 
 
 editProfileBtn.addEventListener("click", function () {
+  resetValidation(editProfileForm, settings);
   editProfileNameInput.value = profileNameEl.textContent;
   editProfileDescriptionInput.value = profileDescriptionEl.textContent;
   openModal(editProfileModal);
@@ -261,15 +266,21 @@ editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
 function handleProfileAvatarSubmit(evt) {
   evt.preventDefault();
+  const submitBtn = evt.submitter;
+  setButtonText(submitBtn, true, "Saving...", "Saving");
   api.editUserAvatar(profileAvatarLinkInput.value)
     .then((data) => {
       profileAvatarEl.src = data.avatar;
+      closeModal(profileAvatarModal);
     })
     .catch((err) => {
       console.error(err);
+    })
+    .finally(() => {
+      setButtonText(submitBtn, false, "Saving...", "Saving");
     });
 
-  closeModal(profileAvatarModal)
+
 }
 profileAvatarForm.addEventListener("submit", handleProfileAvatarSubmit);
 
@@ -279,6 +290,8 @@ deleteForm.addEventListener("submit", handleDeleteSubmit);
 
 function handleNewPostSubmit(evt) {
   evt.preventDefault();
+  const submitBtn = evt.submitter;
+  setButtonText(submitBtn, true, "Saving...", "Save");
   const inputValues = {
     link: newPostImageLinkInput.value,
     name: newPostCaptionInput.value,
@@ -289,10 +302,13 @@ function handleNewPostSubmit(evt) {
       const cardElement = getCardElement(cardData);
       cardsList.prepend(cardElement);
       evt.target.reset();
-      disabledButton(newPostSaveBtn, settings);
+      resetValidation(newPostForm, settings);
       closeModal(newPostModal);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(submitBtn, false, "Saving...", "Save");
+    });
 }
 
 newPostForm.addEventListener("submit", handleNewPostSubmit);
