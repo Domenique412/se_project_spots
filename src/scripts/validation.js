@@ -56,18 +56,26 @@ const setEventListeners = (formEl, config) => {
   const inputList = Array.from(formEl.querySelectorAll(config.inputSelector));
   const buttonEl = formEl.querySelector(config.submitButtonSelector);
 
-  toggleButtonState(inputList, buttonEl, config);
+  if (buttonEl) {
+    toggleButtonState(inputList, buttonEl, config);
 
-  inputList.forEach((inputEl) => {
-    inputEl.addEventListener("input", function () {
-      checkInputValidity(formEl, inputEl, config);
-      toggleButtonState(inputList, buttonEl, config);
+    inputList.forEach((inputEl) => {
+      inputEl.addEventListener("input", function () {
+        checkInputValidity(formEl, inputEl, config);
+        toggleButtonState(inputList, buttonEl, config);
+      });
     });
-  });
+  }
 };
 
-const resetValidation = (formEl, inputList, config) => {
-  inputList.forEach((input) => { hideInputError(formEl, input); })
+
+export const resetValidation = (formEl, config) => {
+  const inputList = Array.from(formEl.querySelectorAll(config.inputSelector));
+  inputList.forEach((input) => { hideInputError(formEl, input, config); });
+  const buttonEl = formEl.querySelector(config.submitButtonSelector);
+  if (buttonEl) {
+    toggleButtonState(inputList, buttonEl, config);
+  }
 };
 
 

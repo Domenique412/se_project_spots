@@ -7,7 +7,6 @@
     "build": "webpack --mode production",
     "dev": "webpack serve --mode development"
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Domenique412/se_project_spots.git"
@@ -18,7 +17,6 @@
     "url": "https://github.com/Domenique412/se_project_spots/issues"
   },
   "homepage": "https://github.com/Domenique412/se_project_spots#readme",
-
   "devDependencies": {
     "@babel/core": "7.18.9",
     "@babel/preset-env": "7.18.9",
@@ -37,6 +35,4 @@
   "dependencies": {
     "core-js": "3.23.5"
   }
-
-
 }
